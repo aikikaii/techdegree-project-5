@@ -4,11 +4,14 @@ fetch('https://randomuser.me/api/?results=12')
     .then(response => response.json())
     .then(data => getData(data.results))
     //.then(data => console.log(data.results))
+    .catch(error => console.log('Looks like there was a problem !', error))
 
 ////////      END      ///////////
 
+// looping through data.results 
 function getData(data) {
     data.map(person => {
+
         /////////       CREATING SEARCH MARKUP      ///////////
 
         const div = document.querySelector('.search-container');
@@ -20,8 +23,6 @@ function getData(data) {
         </form>
          `;
         div.innerHTML = HTML;
-
-        ////////       END    //////////
 
         /////////////      CREATING GALERY MARKUP    ///////////////
 
@@ -52,15 +53,20 @@ function getData(data) {
         divInfoContainer.append(p);
         divInfoContainer.append(p1);
 
-        /////////////     END   /////////////////////
 
-        ///////    DYNAMICALLY LOADING HTML FROM SERVER    ///////
+        ///////    DYNAMICALLY LOADING DATA FROM SERVER TO PAGE    ///////
 
         h3.innerHTML = person.name.first + ' ' + person.name.last;
         p.innerHTML = person.email;
         p1.innerHTML = person.location.city;
 
-        /////////    END     ///////////
+        //////        MODAL MARKUP      ////////
+
+        let gallery = document.getElementById('gallery');
+        gallery.addEventListener('click', e => {
+            console.log(this.e);
+        });
+
 
     });
 
