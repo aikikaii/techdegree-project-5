@@ -47,7 +47,8 @@ function getData(data) {
         divGalery.append(card);
         card.append(cardImgContainer);
         cardImgContainer.append(img);
-        img.setAttribute('src', person.picture.medium);
+        img.setAttribute('src', person.picture.large);
+        img.setAttribute('alt', 'profile picture');
         card.append(divInfoContainer);
         divInfoContainer.append(h3);
         divInfoContainer.append(p);
@@ -62,11 +63,93 @@ function getData(data) {
 
         //////        MODAL MARKUP      ////////
 
+        //event listener
         let gallery = document.getElementById('gallery');
         gallery.addEventListener('click', e => {
-            console.log(this.e);
+
+            let found = e.target.className === 'card';
+
+            console.log(found);
+
+
+            /*-------------------------*/
+
+            let divModal = document.createElement('div');
+            let div = document.createElement('div');
+            let divInfo = document.createElement('div');
+            let button = document.createElement('button');
+            let img = document.createElement('img');
+            let h3 = document.createElement('h3');
+            let email = document.createElement('p');
+            let city = document.createElement('p');
+            let hr = document.createElement('hr');
+            let phone = document.createElement('p');
+            let address = document.createElement('p');
+            let birthday = document.createElement('p');
+
+
+            gallery.append(divModal);
+            divModal.append(div);
+            div.append(button);
+            div.append(divInfo)
+            divInfo.append(img);
+            divInfo.append(h3);
+            divInfo.append(email);
+            divInfo.append(city);
+            divInfo.append(hr);
+            divInfo.append(phone);
+            divInfo.append(address);
+            divInfo.append(birthday);
+
+            divModal.className = 'modal-container';
+            div.className = 'modal';
+            button.type = 'button';
+            button.setAttribute('id', 'modal-close-btn');
+            button.className = 'modal-close-btn';
+            button.innerHTML = "<strong>X</strong>"
+            divInfo.className = 'modal-info-container';
+            img.className = 'modal-img';
+            img.setAttribute('src', person.picture.large);
+            img.setAttribute('alt', 'profile picture');
+            h3.setAttribute('id', 'name');
+            h3.className = 'modal-name cap';
+            h3.innerHTML = person.name.first + ' ' + person.name.last;
+            email.className = 'modal-text';
+            email.innerHTML = person.email;
+            city.className = 'modal-text cap';
+            city.innerHTML = person.location.city;
+            phone.className = 'modal-text';
+            phone.innerHTML = person.cell;
+            address.className = 'modal-text';
+            address.innerHTML = person.location.street.number + ' ' + person.location.street.name + '. , ' + person.location.city + ', ' + 'OR ' + person.location.postcode;
+            birthday.className = 'modal-text';
+            //slice some string
+            let bDay = person.dob.date;
+            let cutString = bDay.substring(0, 10);
+            birthday.innerHTML = 'Birthday: ' + cutString;
         });
 
+        /*  <div class="modal-container">
+                <div class="modal">
+                    <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+                    <div class="modal-info-container">
+                        <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
+                        <h3 id="name" class="modal-name cap">name</h3>
+                        <p class="modal-text">email</p>
+                        <p class="modal-text cap">city</p>
+                        <hr>
+                        <p class="modal-text">(555) 555-5555</p>
+                        <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
+                        <p class="modal-text">Birthday: 10/21/2015</p>
+                    </div>
+                </div>
+
+                // IMPORTANT: Below is only for exceeds tasks 
+                <div class="modal-btn-container">
+                    <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+                    <button type="button" id="modal-next" class="modal-next btn">Next</button>
+                </div>
+            </div>*/
 
     });
 
