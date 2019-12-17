@@ -12,18 +12,7 @@ fetch('https://randomuser.me/api/?results=12')
 function getData(data) {
     data.map(person => {
 
-        /////////       CREATING SEARCH MARKUP      ///////////
-
-        const div = document.querySelector('.search-container');
-        let HTML =
-            `
-        <form action="#" method="get">
-            <input type="search" id="search-input" class="search-input" placeholder="Search...">
-            <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-        </form>
-         `;
-        div.innerHTML = HTML;
-
+        appendDiv(data);
         /////////////      CREATING GALERY MARKUP    ///////////////
 
         const divGalery = document.querySelector('.gallery');
@@ -54,7 +43,6 @@ function getData(data) {
         divInfoContainer.append(p);
         divInfoContainer.append(p1);
 
-
         ///////    DYNAMICALLY LOADING DATA FROM SERVER TO PAGE    ///////
 
         h3.innerHTML = person.name.first + ' ' + person.name.last;
@@ -63,19 +51,16 @@ function getData(data) {
 
         //////        MODAL MARKUP      ////////
 
-        //event listener
-        let gallery = document.getElementById('gallery');
-        gallery.addEventListener('click', e => {
+        let user = document.querySelectorAll('.card');
+        user.addEventListener('click', e => {
 
-
-
-
+            let body = document.querySelector('body');
             let divModal = document.createElement('div');
             let div = document.createElement('div');
             let divInfo = document.createElement('div');
             let button = document.createElement('button');
-            let img = document.createElement('img');
-            let h3 = document.createElement('h3');
+            let img1 = document.createElement('img');
+            let h31 = document.createElement('h3');
             let email = document.createElement('p');
             let city = document.createElement('p');
             let hr = document.createElement('hr');
@@ -84,12 +69,12 @@ function getData(data) {
             let birthday = document.createElement('p');
 
 
-            gallery.append(divModal);
+            body.append(divModal);
             divModal.append(div);
             div.append(button);
             div.append(divInfo)
-            divInfo.append(img);
-            divInfo.append(h3);
+            divInfo.append(img1);
+            divInfo.append(h31);
             divInfo.append(email);
             divInfo.append(city);
             divInfo.append(hr);
@@ -104,12 +89,12 @@ function getData(data) {
             button.className = 'modal-close-btn';
             button.innerHTML = "<strong>X</strong>"
             divInfo.className = 'modal-info-container';
-            img.className = 'modal-img';
-            img.setAttribute('src', person.picture.large);
-            img.setAttribute('alt', 'profile picture');
-            h3.setAttribute('id', 'name');
-            h3.className = 'modal-name cap';
-            h3.innerHTML = person.name.first + ' ' + person.name.last;
+            img1.className = 'modal-img';
+            img1.setAttribute('src', person.picture.large);
+            img1.setAttribute('alt', 'profile picture');
+            h31.setAttribute('id', 'name');
+            h31.className = 'modal-name cap';
+            h31.innerHTML = person.name.first + ' ' + person.name.last;
             email.className = 'modal-text';
             email.innerHTML = person.email;
             city.className = 'modal-text cap';
@@ -127,5 +112,17 @@ function getData(data) {
         });
 
     });
+}
+/////////       CREATING SEARCH MARKUP      ///////////
 
+function appendDiv(data) {
+    const div = document.querySelector('.search-container');
+    let HTML =
+        `
+    <form action="#" method="get">
+        <input type="search" id="search-input" class="search-input" placeholder="Search...">
+        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    </form>
+     `;
+    div.innerHTML = HTML;
 }
