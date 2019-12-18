@@ -12,6 +12,7 @@ fetch('https://randomuser.me/api/?results=12')
 function getData(data) {
     data.map(person => {
 
+        //create search
         appendDiv(data);
         /////////////      CREATING GALERY MARKUP    ///////////////
 
@@ -49,69 +50,96 @@ function getData(data) {
         p.innerHTML = person.email;
         p1.innerHTML = person.location.city;
 
-        //////        MODAL MARKUP      ////////
-
-        let user = document.querySelectorAll('.card');
-        user.addEventListener('click', e => {
-
-            let body = document.querySelector('body');
-            let divModal = document.createElement('div');
-            let div = document.createElement('div');
-            let divInfo = document.createElement('div');
-            let button = document.createElement('button');
-            let img1 = document.createElement('img');
-            let h31 = document.createElement('h3');
-            let email = document.createElement('p');
-            let city = document.createElement('p');
-            let hr = document.createElement('hr');
-            let phone = document.createElement('p');
-            let address = document.createElement('p');
-            let birthday = document.createElement('p');
+        //add event listener on each card item
+        const $user = document.querySelectorAll('.card');
+        [...$user].forEach($user => $user.addEventListener('click', e => {
 
 
-            body.append(divModal);
-            divModal.append(div);
-            div.append(button);
-            div.append(divInfo)
-            divInfo.append(img1);
-            divInfo.append(h31);
-            divInfo.append(email);
-            divInfo.append(city);
-            divInfo.append(hr);
-            divInfo.append(phone);
-            divInfo.append(address);
-            divInfo.append(birthday);
+            if ([...e.currentTarget.classList].includes('card')) {
+                console.log(card);
 
-            divModal.className = 'modal-container';
-            div.className = 'modal';
-            button.type = 'button';
-            button.setAttribute('id', 'modal-close-btn');
-            button.className = 'modal-close-btn';
-            button.innerHTML = "<strong>X</strong>"
-            divInfo.className = 'modal-info-container';
-            img1.className = 'modal-img';
-            img1.setAttribute('src', person.picture.large);
-            img1.setAttribute('alt', 'profile picture');
-            h31.setAttribute('id', 'name');
-            h31.className = 'modal-name cap';
-            h31.innerHTML = person.name.first + ' ' + person.name.last;
-            email.className = 'modal-text';
-            email.innerHTML = person.email;
-            city.className = 'modal-text cap';
-            city.innerHTML = person.location.city;
-            phone.className = 'modal-text';
-            phone.innerHTML = person.cell;
-            address.className = 'modal-text';
-            address.innerHTML = person.location.street.number + ' ' + person.location.street.name + '. , ' + person.location.city + ', ' + 'OR ' + person.location.postcode;
-            birthday.className = 'modal-text';
-            //slice some string
-            let bDay = person.dob.date;
-            let cutString = bDay.substring(0, 10);
-            birthday.innerHTML = 'Birthday: ' + cutString;
+                //////        MODAL MARKUP      ////////
 
-        });
+                let body = document.querySelector('body');
+                let divModal = document.createElement('div');
+                let div = document.createElement('div');
+                let divInfo = document.createElement('div')
+                let button = document.createElement('button');
+                let img1 = document.createElement('img');
+                let h31 = document.createElement('h3');
+                let email = document.createElement('p');
+                let city = document.createElement('p');
+                let hr = document.createElement('hr');
+                let phone = document.createElement('p');
+                let address = document.createElement('p');
+                let birthday = document.createElement('p');
+                let modalBTN = document.createElement('div');
+                let buttonPrev = document.createElement('button');
+                let buttonNext = document.createElement('button');
 
+
+                divModal.className = 'modal-container';
+                div.className = 'modal';
+                button.type = 'button';
+                button.setAttribute('id', 'modal-close-btn');
+                button.className = 'modal-close-btn';
+                button.innerHTML = "<strong>X</strong>"
+                divInfo.className = 'modal-info-container';
+                img1.className = 'modal-img';
+                img1.setAttribute('src', person.picture.large);
+                img1.setAttribute('alt', 'profile picture');
+                h31.setAttribute('id', 'name');
+                h31.className = 'modal-name cap';
+                h31.innerHTML = person.name.first + ' ' + person.name.last;
+                email.className = 'modal-text';
+                email.innerHTML = person.email;
+                city.className = 'modal-text cap';
+                city.innerHTML = person.location.city;
+                phone.className = 'modal-text';
+                phone.innerHTML = person.cell;
+                address.className = 'modal-text';
+                address.innerHTML = person.location.street.number + ' ' + person.location.street.name + '. , ' + person.location.city + ', ' + 'OR ' + person.location.postcode;
+                birthday.className = 'modal-text';
+                //slice some string
+                let bDay = person.dob.date;
+                let cutString = bDay.substring(0, 10);
+                birthday.innerHTML = 'Birthday: ' + cutString;
+                modalBTN.className = 'modal-btn-container';
+                buttonPrev.className = 'modal-prev btn';
+                buttonNext.className = 'modal-next btn';
+                buttonPrev.setAttribute('type', 'button');
+                buttonPrev.setAttribute('id', 'modal-prev');
+                buttonPrev.innerHTML = 'Prev';
+                buttonNext.setAttribute('type', 'button');
+                buttonNext.setAttribute('id', 'modal-next');
+                buttonNext.innerHTML = 'Next';
+
+
+                body.appendChild(divModal);
+                divModal.append(div);
+                div.append(button);
+                div.append(divInfo)
+                divInfo.append(img1);
+                divInfo.append(h31);
+                divInfo.append(email);
+                divInfo.append(city);
+                divInfo.append(hr);
+                divInfo.append(phone);
+                divInfo.append(address);
+                divInfo.append(birthday);
+                divModal.append(modalBTN);
+                modalBTN.append(buttonPrev);
+                modalBTN.append(buttonNext);
+
+                //event listener on close button
+                let $modalButtonClose = $('#modal-close-btn');
+                $modalButtonClose.on('click', e => {
+                    $('.modal-container').css('display', 'none');
+                });
+            }
+        }));
     });
+
 }
 /////////       CREATING SEARCH MARKUP      ///////////
 
