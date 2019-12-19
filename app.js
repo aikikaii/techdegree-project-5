@@ -8,14 +8,38 @@ fetch('https://randomuser.me/api/?results=12')
 
 ////////      END      ///////////
 
+
 // looping through data.results 
 function getData(data) {
     data.map(person => {
-
         //create search
         appendDiv(data);
-        /////////////      CREATING GALERY MARKUP    ///////////////
+    });
+    //create gallery
+    createGallery(data);
+    //create modal
+    createModal(data);
 
+}
+/////////       CREATING SEARCH MARKUP      ///////////
+function appendDiv(data) {
+    const div = document.querySelector('.search-container');
+    let HTML =
+        `
+    <form action="#" method="get">
+        <input type="search" id="search-input" class="search-input" placeholder="Search...">
+        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    </form>
+     `;
+    div.innerHTML = HTML;
+}
+
+
+function createGallery(data) {
+
+    data.map(person => {
+
+        /////////////      CREATING GALERY MARKUP    ///////////////
         const divGalery = document.querySelector('.gallery');
         const card = document.createElement('div');
         const cardImgContainer = document.createElement('div');
@@ -49,16 +73,22 @@ function getData(data) {
         h3.innerHTML = person.name.first + ' ' + person.name.last;
         p.innerHTML = person.email;
         p1.innerHTML = person.location.city;
+    })
+}
 
-        //add event listener on each card item
-        const $user = document.querySelectorAll('.card');
-        [...$user].forEach($user => $user.addEventListener('click', e => {
+function createModal(data) {
+    let card = document.querySelectorAll('.card');
+
+    data.map(person => {
+
+        card.forEach(cards => {
+
+            const name = person.name.first + person.name.last;
+            console.log(name);
 
 
-            if ([...e.currentTarget.classList].includes('card')) {
-                console.log(card);
+            cards.addEventListener('click', function(e) {
 
-                //////        MODAL MARKUP      ////////
 
                 let body = document.querySelector('body');
                 let divModal = document.createElement('div');
@@ -131,26 +161,14 @@ function getData(data) {
                 modalBTN.append(buttonPrev);
                 modalBTN.append(buttonNext);
 
-                //event listener on close button
+                //close button
                 let $modalButtonClose = $('#modal-close-btn');
                 $modalButtonClose.on('click', e => {
                     $('.modal-container').css('display', 'none');
                 });
-            }
-        }));
+
+            });
+
+        });
     });
-
-}
-/////////       CREATING SEARCH MARKUP      ///////////
-
-function appendDiv(data) {
-    const div = document.querySelector('.search-container');
-    let HTML =
-        `
-    <form action="#" method="get">
-        <input type="search" id="search-input" class="search-input" placeholder="Search...">
-        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
-    </form>
-     `;
-    div.innerHTML = HTML;
 }
